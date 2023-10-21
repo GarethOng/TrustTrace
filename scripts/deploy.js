@@ -5,20 +5,16 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 import hre from "hardhat";
+import { expect } from "chai";
+import pkg from "hardhat";
+const { ethers } = pkg;
 
-const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-const unlockTime = currentTimestampInSeconds + 60;
+const TrustUSDFactory = await ethers.getContractFactory("TrustUSD");
+const [deployerAddress, regulator, donor] = await ethers.getSigners();
+const trustUSD = await TrustUSDFactory.deploy(deployerAddress.address);
+console.log("TrustUSD deployed to:", trustUSD.target);
 
-const lockedAmount = hre.ethers.parseEther("0.001");
 
-const lock = await ethers.deployContract("Lock", [unlockTime], {
-  value: lockedAmount,
-});
-
-await lock.waitForDeployment();
-
-console.log(
-  `Lock with ${ethers.formatEther(
-    lockedAmount
-  )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-);
+const TrustTraceFactory = await ethers.getContractFactory("TrustTrace");
+const trustTrace = await TrustTraceFactory.deploy(trustUSD.target, "10000000000000000000000000", regulator.address, [10, 20, 20, 40, 10]);
+console.log("TrustTrace deployed to:", trustTrace.target);
