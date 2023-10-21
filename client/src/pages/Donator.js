@@ -2,6 +2,8 @@ import { Chip, Box, Typography, Button } from '@mui/material';
 import cerfLogo from '../assets/images/cerf_logo.png';
 import media1 from '../assets/images/media1.jpeg';
 import progress10 from '../assets/images/progress_10.png';
+import logo from '../assets/images/logo.jpg';
+
 const ethers = require('ethers');
 
 const Donator = () => {
@@ -40,10 +42,13 @@ const Donator = () => {
 
   return (
 
-    <Box sx={{ backgroundColor: '#ffffff', padding: '16px' }}>
+    <Box sx={{ backgroundColor: '#ffffff', padding: '16px', display: 'flex', flexDirection: 'column' }}>
 
-      <Box>
-        <img src={cerfLogo} width={300} />
+      <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        <img src={cerfLogo} width={300} height={70} />
+        <Box sx={{ marginLeft: 'auto', marginRight: '16px' }} >
+          <img src={logo} width={300} />
+        </Box>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ fontSize: '24px', fontWeight: 'bold', fontFamily: 'Cabin' }}>
