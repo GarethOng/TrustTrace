@@ -2,10 +2,41 @@ import { Chip, Box, Typography, Button } from '@mui/material';
 import cerfLogo from '../assets/images/cerf_logo.png';
 import media1 from '../assets/images/media1.jpeg';
 import progress10 from '../assets/images/progress_10.png';
+const ethers = require('ethers');
 
 const Donator = () => {
 
   const tags = ['Tsunami', 'Flooding', 'Food Aid', 'Safe Water Supply', 'Medicine'];
+
+  const onDonateClicked = () => {
+    
+    // Check if MetaMask is installed
+    if (typeof window.ethereum !== 'undefined') {
+      // Create a Web3Provider from the MetaMask provider
+      const provider = new ethers.BrowserProvider(window.ethereum);
+
+      // Request MetaMask to enable your application
+      window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then((accounts) => {
+          console.log('Connected to MetaMask with account: ', accounts[0]);
+
+          // Create a wallet from the provider
+          const wallet = provider.getSigner();
+
+          // Example: Get the connected account's balance
+          wallet.getBalance().then((balance) => {
+            console.log('Account balance: ', ethers.utils.formatEther(balance));
+          });
+        })
+        .catch((error) => {
+          console.error('Error connecting to MetaMask: ', error);
+        });
+    } else {
+      console.error('MetaMask is not installed. Please install MetaMask to use this application.');
+    }
+
+  }
 
   return (
 
@@ -49,7 +80,7 @@ const Donator = () => {
             <Typography sx={{ fontSize: '16px', fontFamily: 'Cabin' }} >{`left to support`}</Typography>
           </Box>
           <Box sx={{ height: '24px' }} />
-          <Button disableElevation={true} variant="contained" sx={{ fontSize: '16px', fontFamily: 'Cabin' }}>
+          <Button disableElevation={true} variant="contained" sx={{ fontSize: '16px', fontFamily: 'Cabin' }} onClick={onDonateClicked}>
             {`Donate Online`}
           </Button>
         </Box>
