@@ -1,27 +1,15 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import { Landing, Register, Error, ProtectedRoute } from './pages'
-import { Home, Setting, SharedLayout, Profile } from './pages/dashboard'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Donator from './pages/Donator'
+import Ngo from './pages/Ngo'
+import Regulator from './pages/Regulator'
 
 function App() {
   return (
     <BrowserRouter>
-      <nav></nav>
       <Routes>
-        <Route
-          path='/'
-          element={
-            <ProtectedRoute>
-              <SharedLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path='home' element={<Home />} />
-          <Route path='setting' element={<Setting />}></Route>
-          <Route path='profile' element={<Profile />}></Route>
-        </Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/landing' element={<Landing />}></Route>
-        <Route path='*' element={<Error />}></Route>
+        <Route path='/donator' element={<Donator/>} />
+        <Route path='/ngo' element={<Ngo />} />
+        <Route path='/regulator' element={<Regulator />} />
       </Routes>
     </BrowserRouter>
   )
