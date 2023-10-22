@@ -59,7 +59,7 @@ const NgoCategory = ({
                     flexDirection: 'column',
                     alignItems: 'center',
                     padding: '16px',
-                    height: '360px',
+                    minHeight: '360px',
                     backgroundColor: '#d9ebfc',
                     borderRadius: '16px',
                   }}

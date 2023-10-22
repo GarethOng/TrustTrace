@@ -23,15 +23,19 @@ const Donator = () => {
   const [campaignData, setCampaignData] = useState(null)
 
   useEffect(() => {
+
     getAllDonationAddresses().then((addresses) => {
-      console.log(addresses)
-    })
-    fetchCampaignData('0x34a60D98966B88B90A275b039DB2fBC2fFCf50A8').then(
-      (campaignData) => {
-        setCampaignData(campaignData)
-        console.log(campaignData)
+      for (let i = 0; i < addresses.length; i++) {
+        const address = addresses[i];
+        fetchCampaignData(address).then(
+          (campaignData) => {
+            setCampaignData(campaignData)
+            console.log(campaignData)
+          }
+        )
       }
-    )
+    })
+
   }, [])
 
   const onDonateClicked = () => {
