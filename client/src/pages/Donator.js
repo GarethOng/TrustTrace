@@ -26,11 +26,12 @@ const Donator = () => {
     getAllDonationAddresses().then((addresses) => {
       console.log(addresses)
     })
-    const campaignData = fetchCampaignData(
-      '0xF8CCB860B9b27Ae1de2eD806D63566f273Ec0C0b'
+    fetchCampaignData('0x34a60D98966B88B90A275b039DB2fBC2fFCf50A8').then(
+      (campaignData) => {
+        setCampaignData(campaignData)
+        console.log(campaignData)
+      }
     )
-    setCampaignData(campaignData)
-    console.log(campaignData)
   }, [])
 
   const onDonateClicked = () => {

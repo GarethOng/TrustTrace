@@ -10,6 +10,7 @@ import connectDB from './db/connect.js'
 
 // routes
 import donationRoute from './routes/donationRoute.js'
+import contractRoute from './routes/contractRoute.js'
 
 // middleware
 import notFoundMiddleware from './middleware/not-found.js'
@@ -30,6 +31,7 @@ app.get('/api/v1', (req, res) => {
 })
 
 app.use('/api/v1/donation', donationRoute)
+app.use('/api/v1/contract', contractRoute)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
