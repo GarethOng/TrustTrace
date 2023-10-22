@@ -2,7 +2,7 @@ const ethers = require("ethers")
 
 async function handleButtonClick(amount) {
 
-  const TRUST_TRACE_ADDRESS = "0xfe76e81821ba7BB9EEc1be883441Db5FF1a3588C";
+  const TRUST_TRACE_ADDRESS = "0x34a60D98966B88B90A275b039DB2fBC2fFCf50A8";
 
   // Check if MetaMask is installed
   if (typeof window.ethereum !== 'undefined') {
