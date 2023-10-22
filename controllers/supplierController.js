@@ -1,4 +1,4 @@
-import Supplier from '../models/Supplier'
+import Supplier from '../models/Supplier.js'
 import { StatusCodes } from 'http-status-codes'
 import { BadRequestError } from '../errors/index.js'
 
@@ -7,11 +7,17 @@ const addSupplier = async (req, res) => {
   if (!name || !address || !description) {
     throw BadRequestError('Please provide all the required fields')
   }
+  let supplier = await Supplier.findOne({ address: address })
+  if (!supplier) {
+    supplier = await Supplier.create({ name, address, description })
+  }
+  res.status(StatusCodes.CREATED).json(supplier)
 }
 
-const getSuppliers = async (req, res) => {
-  const suppliers = await Supplier.find()
-  res.status(StatusCodes.OK).json(suppliers)
+const getSupplier = async (req, res) => {
+  const { address } = req.body
+  const supplier = await Supplier.find({ address: address })
+  res.status(StatusCodes.OK).json(supplier)
 }
 
-export { addSupplier, getSuppliers }
+export { addSupplier, getSupplier }

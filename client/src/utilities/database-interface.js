@@ -6,7 +6,19 @@ const databaseInterface = axios.create({
 
 const getAllDonationAddresses = async () => {
   const response = await databaseInterface.get('/donation/get')
-  return response.data
+  // response body in this scenario is an array of addresses
+  return response.body
 }
 
-export { getAllDonationAddresses }
+const getSupplier = async (address) => {
+  const response = await databaseInterface.post('/supplier/get', { address })
+  // response body has the following structure:
+  // {
+  //   name: 'string',
+  //   address: 'string',
+  //   description: 'string'
+  // }
+  const { name, address, description } = response.body
+  return { name, address, description }
+}
+export { getAllDonationAddresses, getSupplier }
