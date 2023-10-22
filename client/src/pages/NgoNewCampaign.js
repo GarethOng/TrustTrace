@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { Box, Divider, Typography } from '@mui/material';
+import { submitForm } from '../utilities/submit-new-campaign';
 
 const NgoNewCampaign = () => {
 
@@ -33,15 +34,8 @@ const NgoNewCampaign = () => {
     ]
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
   const handleSubmit = (e) => {
+
     e.preventDefault();
     
     // Make sure no nulls
@@ -78,7 +72,7 @@ const NgoNewCampaign = () => {
       return;
     }
 
-    
+    submitForm(formData.totalAmount, '0xCf17b96a46d758802b51994eC522719634Bb84D9', formData.categories.map((category) => category.amount / formData.totalAmount * 100));
 
   };
 
@@ -99,7 +93,13 @@ const NgoNewCampaign = () => {
           variant="outlined"
           name="cause"
           value={formData.cause}
-          onChange={handleInputChange}
+          onChange={(e) => {
+            const cause = e.target.value;
+            setFormData({
+              ...formData,
+              cause: cause
+            });
+          }}
           inputProps={{style: {fontFamily: 'Cabin'}}} // font size of input text
           InputLabelProps={{style: {fontFamily: 'Cabin'}}} // font size of input label
         />
@@ -114,7 +114,13 @@ const NgoNewCampaign = () => {
           variant="outlined"
           name="total_amount"
           value={formData.totalAmount}
-          onChange={handleInputChange}
+          onChange={(e) => {
+            const totalAmount = e.target.value;
+            setFormData({
+              ...formData,
+              totalAmount: totalAmount
+            });
+          }}
           inputProps={{style: {fontFamily: 'Cabin'}}} // font size of input text
           InputLabelProps={{style: {fontFamily: 'Cabin'}}} // font size of input label
 
@@ -133,7 +139,20 @@ const NgoNewCampaign = () => {
                 variant="outlined"
                 name={category.name}
                 value={formData.categories[index].name}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  const name = e.target.value;
+                  setFormData({
+                    ...formData,
+                    categories: [
+                      ...formData.categories.slice(0, index),
+                      {
+                        ...formData.categories[index],
+                        name: name
+                      },
+                      ...formData.categories.slice(index + 1)
+                    ]
+                  });
+                }}
                 inputProps={{style: {fontFamily: 'Cabin'}}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Cabin'}}} // font size of input label
               />
@@ -146,7 +165,20 @@ const NgoNewCampaign = () => {
                 variant="outlined"
                 name={category.name}
                 value={formData.categories[index].amount}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  const amount = e.target.value;
+                  setFormData({
+                    ...formData,
+                    categories: [
+                      ...formData.categories.slice(0, index),
+                      {
+                        ...formData.categories[index],
+                        amount: amount
+                      },
+                      ...formData.categories.slice(index + 1)
+                    ]
+                  });
+                }}
                 inputProps={{style: {fontFamily: 'Cabin'}}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Cabin'}}} // font size of input label
               />

@@ -24,17 +24,18 @@ const Donator = () => {
 
   useEffect(() => {
 
-    getAllDonationAddresses().then((addresses) => {
-      for (let i = 0; i < addresses.length; i++) {
-        const address = addresses[i];
-        fetchCampaignData(address).then(
-          (campaignData) => {
-            setCampaignData(campaignData)
-            console.log(campaignData)
-          }
-        )
-      }
-    })
+    // getAllDonationAddresses().then((addresses) => {
+    //   console.log(addresses)
+    //   for (let i = 0; i < addresses.length; i++) {
+    //     const address = addresses[i];
+    //     fetchCampaignData(address).then(
+    //       (campaignData) => {
+    //         setCampaignData(campaignData)
+    //         console.log(campaignData)
+    //       }
+    //     )
+    //   }
+    // })
 
   }, [])
 
