@@ -85,8 +85,6 @@ const Donator = () => {
 
       {allCampaignsData.map((campaignData, index) => {
 
-        console.log(campaignData);
-
         return (<>
 
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>

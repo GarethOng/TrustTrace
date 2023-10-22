@@ -5,12 +5,13 @@ import progress10 from '../assets/images/progress_10.png'
 import React from 'react'
 import SupplierCard from './SupplierCard'
 
-const NgoCategory = (
+const NgoCategory = ({
   categoryName,
-  categoryAmountStr,
-  catetoryMilestoneStr,
   suppliers
-) => {
+}) => {
+
+  console.log(suppliers)
+
   return (
     <>
       <Box
@@ -33,41 +34,22 @@ const NgoCategory = (
             >
               {categoryName}
             </Typography>
-            <Box sx={{ height: '8px' }} />
-            <img src={progress10} width={300} />
-            <Box sx={{ height: '4px' }} />
-            <Typography
-              sx={{
-                fontSize: '24px',
-                fontWeight: 'bold',
-                fontFamily: 'Cabin',
-              }}
-            >
-              {categoryAmountStr}
-            </Typography>
-            <Typography sx={{ fontSize: '16px', fontFamily: 'Cabin' }}>
-              {catetoryMilestoneStr}
-            </Typography>
           </Box>
         </Box>
 
         <Box sx={{ height: '24px' }} />
 
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          {suppliers &&
-            suppliers.map((supplier) => {
-              const index = suppliers.indexOf(supplier)
-              const supplierArrayLength = suppliers.length
-              return (
-                <SupplierCard
-                  name={supplier.name}
-                  description={supplier.description}
-                  address={supplier.address}
-                  index={index}
-                  supplierArrayLength={supplierArrayLength}
-                />
-              )
-            })}
+          {suppliers && suppliers.map((supplier) => {
+            const index = suppliers.indexOf(supplier)
+            const supplierArrayLength = suppliers.length
+            return (
+              <SupplierCard
+                name={supplier}
+                index={index}
+              />
+            )
+          })}
         </Box>
       </Box>
     </>

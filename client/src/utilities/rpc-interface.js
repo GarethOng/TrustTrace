@@ -6,7 +6,7 @@ const weiToEth = (wei) => {
 }
 
 const provider = new ethers.JsonRpcProvider(
-  'https://sepolia.infura.io/v3/fab3f0d99d8442e3aba236262facb002'
+  'https://sepolia.infura.io/v3/d7e2af7b249f4c79a0b4630cceba1baa'
 )
 
 const abi = [
