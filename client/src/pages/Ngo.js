@@ -6,34 +6,6 @@ import cerfLogo from '../assets/images/cerf_logo.png'
 import progress10 from '../assets/images/progress_10.png'
 import React from 'react'
 
-const data = {
-  labels: [
-    'North City Hospital',
-    'North City Hospital',
-    'North City Hospital',
-    'North City Hospital',
-  ],
-  datasets: [
-    {
-      label: '# of Votes',
-      data: [40, 40, 40, 40],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
-}
-
 const NgoCategory = ({
   categoryName,
   categoryAmountStr,
@@ -68,9 +40,6 @@ const NgoCategory = ({
               {catetoryMilestoneStr}
             </Typography>
           </Box>
-          <Box sx={{ marginRight: '200px', marginLeft: 'auto' }}>
-            <Pie data={data} />
-          </Box>
         </Box>
 
         <Box sx={{ height: '24px' }} />
@@ -89,13 +58,15 @@ const NgoCategory = ({
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    padding: '12px',
+                    padding: '16px',
                     height: '360px',
+                    backgroundColor: '#d9ebfc',
+                    borderRadius: '16px',
                   }}
                 >
                   <Typography
                     sx={{
-                      fontSize: '22px',
+                      fontSize: '21px',
                       fontWeight: 'bold',
                       fontFamily: 'Cabin',
                     }}
@@ -103,16 +74,17 @@ const NgoCategory = ({
                     {addressName}
                   </Typography>
                   <Box sx={{ height: '8px' }} />
-                  <Typography>{addressDescription}</Typography>
-                  <Typography>{addressSendAmount}</Typography>
+                  <Typography sx={{ fontSize: '16px', fontFamily: 'Cabin' }}>{addressDescription}</Typography>
+                  <Typography sx={{ marginTop: 'auto', marginBottom: '8px', fontSize: '23px', fontWeight: 'bold', fontFamily: 'Cabin' }} >{addressSendAmount}</Typography>
                   <Box sx={{ height: '8px' }} />
                   <Button
                     size='large'
-                    variant='outlined'
+                    variant='contained'
                     disableElevation={true}
-                    sx={{ marginTop: 'auto', marginBottom: '0px' }}
+                    sx={{ marginBottom: '0px', fontFamily: 'Cabin' }}
                   >{`Send`}</Button>
                 </Box>
+                {addresses.length - 1 !== index && <Box sx={{ width: '48px' }} />}
               </React.Fragment>
             )
           })}
@@ -123,6 +95,7 @@ const NgoCategory = ({
 }
 
 const Ngo = () => {
+  
   const categories = [
     'Emergency Medicine',
     'Clean Water and Purifiers',
@@ -214,6 +187,7 @@ const Ngo = () => {
                 <Box sx={{ height: '8px' }} />
                 <img src={progress10} width={300} />
                 <Box sx={{ height: '4px' }} />
+                <Typography sx={{ fontSize: '16px', fontFamily: 'Cabin' }}>{`10% of 1M goal raised`}</Typography>
               </Box>
             </Box>
           </Box>

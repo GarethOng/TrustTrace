@@ -6,10 +6,11 @@ import logo from '../assets/images/logo.jpg'
 import React, { useState, useEffect } from 'react'
 import { fetchCampaignData } from '../utilities/rpc-interface.js'
 import { getAllDonationAddresses } from '../utilities/database-interface.js'
-
-const ethers = require('ethers')
+import DollarAmountModal from '../components/DollarAmountModal'
+import handleButtonClick from '../utilities/donateLogic'
 
 const Donator = () => {
+  
   const tags = [
     'Tsunami',
     'Flooding',
@@ -17,7 +18,8 @@ const Donator = () => {
     'Safe Water Supply',
     'Medicine',
   ]
-
+  
+  const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
   const [campaignData, setCampaignData] = useState(null)
 
   useEffect(() => {
@@ -32,33 +34,7 @@ const Donator = () => {
   }, [])
 
   const onDonateClicked = () => {
-    // Check if MetaMask is installed
-    if (typeof window.ethereum !== 'undefined') {
-      // Create a Web3Provider from the MetaMask provider
-      const provider = new ethers.BrowserProvider(window.ethereum)
-
-      // Request MetaMask to enable your application
-      window.ethereum
-        .request({ method: 'eth_requestAccounts' })
-        .then((accounts) => {
-          console.log('Connected to MetaMask with account: ', accounts[0])
-
-          // Create a wallet from the provider
-          const wallet = provider.getSigner()
-
-          // Example: Get the connected account's balance
-          wallet.getBalance().then((balance) => {
-            console.log('Account balance: ', ethers.utils.formatEther(balance))
-          })
-        })
-        .catch((error) => {
-          console.error('Error connecting to MetaMask: ', error)
-        })
-    } else {
-      console.error(
-        'MetaMask is not installed. Please install MetaMask to use this application.'
-      )
-    }
+    setIsDonateModalOpen(true);
   }
 
   return (
@@ -292,6 +268,9 @@ const Donator = () => {
           >{`31 December 2023`}</Typography>
         </Box>
       </Box>
+
+      <DollarAmountModal open={isDonateModalOpen} handleClose={() => setIsDonateModalOpen(false)} handleSubmit={(amount) => handleButtonClick(amount)} />
+
     </Box>
   )
 }
