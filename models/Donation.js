@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const DonationSchema = new mongoose.Schema({
-  hash: {
+  address: {
     type: String,
     required: true,
     unique: true,

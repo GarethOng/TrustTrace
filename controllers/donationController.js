@@ -3,19 +3,21 @@ import { StatusCodes } from 'http-status-codes'
 import { BadRequestError } from '../errors/index.js'
 
 const addDonation = async (req, res) => {
-  const { hash } = req.body
-  if (!hash) {
-    throw BadRequestError('Please provide a hash')
+  const { address: address } = req.body
+  if (!address) {
+    throw BadRequestError('Please provide a address')
   }
-  const donation = await Donation.findOne({ hash: hash })
+  let donation = await Donation.findOne({ address: address })
   if (!donation) {
-    donation = await Donation.create({ hash: hash })
+    donation = await Donation.create({ address: address })
   }
   res.status(StatusCodes.CREATED).json(donation)
 }
 
 const getDonations = async (req, res) => {
-  const donations = await Donation.find()
+  const donations = (await Donation.find()).map((donation) => {
+    return donation.address
+  })
   res.status(StatusCodes.OK).json(donations)
 }
 
