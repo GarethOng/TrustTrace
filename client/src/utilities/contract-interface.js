@@ -17,7 +17,7 @@ const verifyContract = async (contractInformation) => {
     '/contract/verify',
     contractInformation
   )
-  return response.body.success
+  return response.data.success
 }
 
 export { verifyContract }

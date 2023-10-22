@@ -8,6 +8,7 @@ const getAllDonationAddresses = async () => {
   const response = await databaseInterface.get('/donation/get')
   // response body in this scenario is an array of addresses
   return response.data
+  return response.data
 }
 
 const getSupplier = async (address) => {
@@ -18,16 +19,6 @@ const getSupplier = async (address) => {
   //   address: 'string',
   //   description: 'string'
   // }
-  return response.data
+  return response.body
 }
-
-const getSuppliers = async (addresses) => {
-  const response = await databaseInterface.post('/supplier/getSuppliers', {
-    addresses,
-  })
-  // response body in this scenario is an array of suppliers
-  console.log(response.data)
-  return response.data
-}
-
-export { getAllDonationAddresses, getSupplier, getSuppliers }
+export { getAllDonationAddresses, getSupplier }
