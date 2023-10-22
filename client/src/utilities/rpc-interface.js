@@ -1,8 +1,8 @@
 import { ethers } from 'ethers'
 
 const weiToEth = (wei) => {
-  // return ethers.utils.formatEther(wei)
-  return ethers.parseUnits(wei.toString(), 'wei')
+  const MULTIPLE = 1000000000000000000n
+  return wei / MULTIPLE
 }
 
 const provider = new ethers.JsonRpcProvider(
@@ -207,6 +207,13 @@ const abi = [
     type: 'function',
   },
   {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'segmentLength',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'bytes4', name: 'interfaceId', type: 'bytes4' }],
     name: 'supportsInterface',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -249,11 +256,13 @@ const fetchCampaignData = async (address) => {
   let allocatedLength = 0
   while (true) {
     try {
-      const allocatedAmount = await getAllocatedAmount(allocatedLength)
-      if (allocatedAmount === 0) {
+      const allocatedAmount = weiToEth(
+        await getAllocatedAmount(allocatedLength)
+      )
+      if (allocatedAmount === 0n) {
         break
       }
-      allocatedAmounts.push(weiToEth(allocatedAmount))
+      allocatedAmounts.push(allocatedAmount)
       allocatedLength += 1
     } catch (error) {
       break
