@@ -18,7 +18,6 @@ const getSupplier = async (address) => {
   //   address: 'string',
   //   description: 'string'
   // }
-  const { name, address, description } = response.body
-  return { name, address, description }
+  return response.body
 }
 export { getAllDonationAddresses, getSupplier }
