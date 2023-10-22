@@ -20,4 +20,9 @@ const getSupplier = async (req, res) => {
   res.status(StatusCodes.OK).json(supplier)
 }
 
-export { addSupplier, getSupplier }
+const getSuppliers = async (req, res) => {
+  const { addresses } = req.body
+  const suppliers = await Supplier.find({ address: { $in: addresses } })
+  res.status(StatusCodes.OK).json(suppliers)
+}
+export { addSupplier, getSupplier, getSuppliers }

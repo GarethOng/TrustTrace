@@ -6,6 +6,13 @@ import cerfLogo from '../assets/images/cerf_logo.png'
 import progress10 from '../assets/images/progress_10.png'
 import React from 'react'
 
+import { fetchCampaignData } from '../utilities/rpc-interface'
+import {
+  getAllDonationAddresses,
+  getSuppliers,
+} from '../utilities/database-interface'
+import { useEffect, useState, useCallback } from 'react'
+
 const NgoCategory = ({
   categoryName,
   categoryAmountStr,
@@ -74,8 +81,20 @@ const NgoCategory = ({
                     {addressName}
                   </Typography>
                   <Box sx={{ height: '8px' }} />
-                  <Typography sx={{ fontSize: '16px', fontFamily: 'Cabin' }}>{addressDescription}</Typography>
-                  <Typography sx={{ marginTop: 'auto', marginBottom: '8px', fontSize: '23px', fontWeight: 'bold', fontFamily: 'Cabin' }} >{addressSendAmount}</Typography>
+                  <Typography sx={{ fontSize: '16px', fontFamily: 'Cabin' }}>
+                    {addressDescription}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      marginTop: 'auto',
+                      marginBottom: '8px',
+                      fontSize: '23px',
+                      fontWeight: 'bold',
+                      fontFamily: 'Cabin',
+                    }}
+                  >
+                    {addressSendAmount}
+                  </Typography>
                   <Box sx={{ height: '8px' }} />
                   <Button
                     size='large'
@@ -84,7 +103,9 @@ const NgoCategory = ({
                     sx={{ marginBottom: '0px', fontFamily: 'Cabin' }}
                   >{`Send`}</Button>
                 </Box>
-                {addresses.length - 1 !== index && <Box sx={{ width: '48px' }} />}
+                {addresses.length - 1 !== index && (
+                  <Box sx={{ width: '48px' }} />
+                )}
               </React.Fragment>
             )
           })}
@@ -95,12 +116,34 @@ const NgoCategory = ({
 }
 
 const Ngo = () => {
-  
   const categories = [
-    'Emergency Medicine',
-    'Clean Water and Purifiers',
-    'Manpower',
+    'Food and Water Supplies',
+    'Medical Supplies',
+    'Infrastructure',
+    'Search and Rescue',
+    'Temporary Shelters',
   ]
+
+  const [campaignData, setCampaignData] = useState(null)
+  const [dataFetched, setDataFetched] = useState(false)
+  useEffect(() => {
+    async function fetchSuppliers(campaignData) {
+      for (let i = 0; i < 5; i++) {
+        campaignData.allowedRecipients[i] = await getSuppliers(
+          campaignData.allowedRecipients[i]
+        )
+      }
+    }
+    async function fetchData() {
+      const campaignData = await fetchCampaignData(
+        '0x34a60D98966B88B90A275b039DB2fBC2fFCf50A8'
+      )
+      await fetchSuppliers(campaignData)
+      setCampaignData(campaignData)
+      setDataFetched(true)
+    }
+    fetchData()
+  }, [])
 
   return (
     <Box sx={{ backgroundColor: '#ffffff' }}>
@@ -187,7 +230,9 @@ const Ngo = () => {
                 <Box sx={{ height: '8px' }} />
                 <img src={progress10} width={300} />
                 <Box sx={{ height: '4px' }} />
-                <Typography sx={{ fontSize: '16px', fontFamily: 'Cabin' }}>{`10% of 1M goal raised`}</Typography>
+                <Typography
+                  sx={{ fontSize: '16px', fontFamily: 'Cabin' }}
+                >{`10% of 1M goal raised`}</Typography>
               </Box>
             </Box>
           </Box>

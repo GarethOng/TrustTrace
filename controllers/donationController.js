@@ -16,6 +16,9 @@ const addDonation = async (req, res) => {
 
 const getDonations = async (req, res) => {
   const donations = (await Donation.find()).map((donation) => {
+    if (donation == null) {
+      return []
+    }
     return donation.address
   })
   res.status(StatusCodes.OK).json(donations)

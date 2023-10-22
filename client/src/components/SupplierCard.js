@@ -3,7 +3,9 @@ import { Box, Button, Typography } from '@mui/material'
 import React from 'react'
 
 const SupplierCard = (
-  { name, address, description },
+  name,
+  description,
+  address,
   index,
   supplierArrayLength
 ) => {
@@ -36,7 +38,7 @@ const SupplierCard = (
             fontFamily: 'Cabin',
           }}
         >
-          {'Address' + address}
+          {'Address ' + address}
         </Typography>
         <Box sx={{ height: '8px' }} />
         <Typography sx={{ fontSize: '16px', fontFamily: 'Cabin' }}>
@@ -54,3 +56,5 @@ const SupplierCard = (
     </React.Fragment>
   )
 }
+
+export default SupplierCard

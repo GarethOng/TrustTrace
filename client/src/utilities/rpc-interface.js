@@ -290,7 +290,6 @@ const fetchCampaignData = async (address) => {
   maxTotalDonations = weiToEth(maxTotalDonations)
   let totalDonations = await contract.totalDonations()
   totalDonations = weiToEth(totalDonations)
-
   return {
     allocatedAmounts: allocatedAmounts,
     allowedRecipients: allowedRecipients,
