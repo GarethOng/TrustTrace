@@ -8,6 +8,7 @@ contract TrustTrace is AccessControl {
     IERC20 public trustUSD;
     mapping(uint256 => address[]) public allowedRecipients;
     mapping(uint256 => uint256) public allowedAmounts;
+    uint256[] public segmentLength;
     uint256 public totalDonations;
     uint256 public maxTotalDonations;
     bytes32 public constant REGULATOR_ROLE = keccak256("REGULATOR_ROLE");
@@ -30,6 +31,7 @@ contract TrustTrace is AccessControl {
             allowedAmounts[i] =
                 (maxTotalDonations * allowancePercentage[i]) /
                 100;
+            segmentLength.push(0);
         }
     }
 
@@ -85,5 +87,6 @@ contract TrustTrace is AccessControl {
         address newRecipient
     ) external onlyRole(REGULATOR_ROLE) {
         allowedRecipients[segment].push(newRecipient);
+        segmentLength[segment] += 1;
     }
 }
